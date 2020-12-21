@@ -47,6 +47,7 @@ typedef enum rz_cmd_arg_type_t {
 	RZ_CMD_ARG_TYPE_OPTION, ///< Argument is an option, prefixed with `-`. It is present or not. No argument.
 	RZ_CMD_ARG_TYPE_CMD, ///< Argument is an rizin command
 	RZ_CMD_ARG_TYPE_CMD_LAST, ///< Argument is an rizin command and it can also contain spaces (if present, must be last in the list)
+	RZ_CMD_ARG_TYPE_CMD_ARGV, ///< Argument is an rizin command and it can also contain spaces (if present, must be last in the list). The command is passed to the handler as an array of strings.
 	RZ_CMD_ARG_TYPE_MACRO, ///< Argument is the name of a pre-defined macro
 } RzCmdArgType;
 

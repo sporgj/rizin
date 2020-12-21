@@ -468,6 +468,7 @@ static void get_minmax_argc(RzCmdDesc *cd, int *min_argc, int *max_argc) {
 		(*max_argc)++;
 		switch (arg->type) {
 		case RZ_CMD_ARG_TYPE_CMD_LAST:
+		case RZ_CMD_ARG_TYPE_CMD_ARGV:
 		case RZ_CMD_ARG_TYPE_STRING_LAST:
 			return;
 		case RZ_CMD_ARG_TYPE_ARRAY_STRING:
