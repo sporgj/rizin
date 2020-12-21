@@ -31,9 +31,9 @@ typedef struct rz_subprocess_opt_t {
 	const char **envvars;
 	const char **envvals;
 	size_t env_size;
-	RzProcessPipe stdin;
-	RzProcessPipe stdout;
-	RzProcessPipe stderr;
+	RzProcessPipe stdin_pipe;
+	RzProcessPipe stdout_pipe;
+	RzProcessPipe stderr_pipe;
 } RzSubprocessOpt;
 
 typedef struct rz_subprocess_t RzSubprocess;

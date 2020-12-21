@@ -592,7 +592,7 @@ RZ_API RzSubprocess *rz_subprocess_start_opt(RzSubprocessOpt *opt) {
 	int stdin_pipe[2] = { -1, -1 };
 	int stdout_pipe[2] = { -1, -1 };
 	int stderr_pipe[2] = { -1, -1 };
-	if (opt->stdin == RZ_PROCESS_PIPE_CREATE) {
+	if (opt->stdin_pipe == RZ_PROCESS_PIPE_CREATE) {
 		if (rz_sys_pipe (stdin_pipe, true) == -1) {
 			perror ("pipe");
 			goto error;
@@ -600,7 +600,7 @@ RZ_API RzSubprocess *rz_subprocess_start_opt(RzSubprocessOpt *opt) {
 		proc->stdin_fd = stdin_pipe[1];
 	}
 
-	if (opt->stdout == RZ_PROCESS_PIPE_CREATE) {
+	if (opt->stdout_pipe == RZ_PROCESS_PIPE_CREATE) {
 		if (rz_sys_pipe (stdout_pipe, true) == -1) {
 			perror ("pipe");
 			goto error;
@@ -612,7 +612,7 @@ RZ_API RzSubprocess *rz_subprocess_start_opt(RzSubprocessOpt *opt) {
 		proc->stdout_fd = stdout_pipe[0];
 	}
 
-	if (opt->stderr == RZ_PROCESS_PIPE_CREATE) {
+	if (opt->stderr_pipe == RZ_PROCESS_PIPE_CREATE) {
 		if (rz_sys_pipe (stderr_pipe, true) == -1) {
 			perror ("pipe");
 			goto error;
@@ -622,7 +622,7 @@ RZ_API RzSubprocess *rz_subprocess_start_opt(RzSubprocessOpt *opt) {
 			goto error;
 		}
 		proc->stderr_fd = stderr_pipe[0];
-	} else if (opt->stderr == RZ_PROCESS_PIPE_STDOUT) {
+	} else if (opt->stderr_pipe == RZ_PROCESS_PIPE_STDOUT) {
 		stderr_pipe[0] = stdout_pipe[0];
 		stderr_pipe[1] = stdout_pipe[1];
 		proc->stderr_fd = proc->stdout_fd;
@@ -903,9 +903,9 @@ RZ_API RzSubprocess *rz_subprocess_start(
 		.envvars = envvars,
 		.envvals = envvals,
 		.env_size = env_size,
-		.stdin = RZ_PROCESS_PIPE_CREATE,
-		.stdout = RZ_PROCESS_PIPE_CREATE,
-		.stderr = RZ_PROCESS_PIPE_CREATE,
+		.stdin_pipe = RZ_PROCESS_PIPE_CREATE,
+		.stdout_pipe = RZ_PROCESS_PIPE_CREATE,
+		.stderr_pipe = RZ_PROCESS_PIPE_CREATE,
 	};
 	return rz_subprocess_start_opt (&opt);
 }

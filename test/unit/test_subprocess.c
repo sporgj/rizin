@@ -134,9 +134,9 @@ bool test_nopipes(void) {
 	const char *exe_path = get_auxiliary_path ("subprocess-helloworld");
 	RzSubprocessOpt opt = { 0 };
 	opt.file = exe_path;
-	opt.stdin = RZ_PROCESS_PIPE_NONE;
-	opt.stdout = RZ_PROCESS_PIPE_NONE;
-	opt.stderr = RZ_PROCESS_PIPE_NONE;
+	opt.stdin_pipe = RZ_PROCESS_PIPE_NONE;
+	opt.stdout_pipe = RZ_PROCESS_PIPE_NONE;
+	opt.stderr_pipe = RZ_PROCESS_PIPE_NONE;
 	RzSubprocess *sp = rz_subprocess_start_opt (&opt);
 	mu_assert_notnull (sp, "the subprocess should be created");
 	rz_subprocess_wait (sp, UT_TIMEOUT);
@@ -155,9 +155,9 @@ bool test_stdoutonly(void) {
 	const char *exe_path = get_auxiliary_path ("subprocess-helloworld");
 	RzSubprocessOpt opt = { 0 };
 	opt.file = exe_path;
-	opt.stdin = RZ_PROCESS_PIPE_NONE;
-	opt.stdout = RZ_PROCESS_PIPE_CREATE;
-	opt.stderr = RZ_PROCESS_PIPE_NONE;
+	opt.stdin_pipe = RZ_PROCESS_PIPE_NONE;
+	opt.stdout_pipe = RZ_PROCESS_PIPE_CREATE;
+	opt.stderr_pipe = RZ_PROCESS_PIPE_NONE;
 	RzSubprocess *sp = rz_subprocess_start_opt (&opt);
 	mu_assert_notnull (sp, "the subprocess should be created");
 	rz_subprocess_wait (sp, UT_TIMEOUT);
@@ -176,9 +176,9 @@ bool test_stdoutstderr(void) {
 	const char *exe_path = get_auxiliary_path ("subprocess-helloworld");
 	RzSubprocessOpt opt = { 0 };
 	opt.file = exe_path;
-	opt.stdin = RZ_PROCESS_PIPE_NONE;
-	opt.stdout = RZ_PROCESS_PIPE_CREATE;
-	opt.stderr = RZ_PROCESS_PIPE_STDOUT;
+	opt.stdin_pipe = RZ_PROCESS_PIPE_NONE;
+	opt.stdout_pipe = RZ_PROCESS_PIPE_CREATE;
+	opt.stderr_pipe = RZ_PROCESS_PIPE_STDOUT;
 	RzSubprocess *sp = rz_subprocess_start_opt (&opt);
 	mu_assert_notnull (sp, "the subprocess should be created");
 	rz_subprocess_wait (sp, UT_TIMEOUT);
