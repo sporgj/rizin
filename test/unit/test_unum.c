@@ -139,5 +139,7 @@ bool all_tests() {
 
 int main(int argc, char **argv) {
 	num = rz_num_new (NULL, NULL, NULL);
+	rz_cons_new ();
+	rz_cons_free ();
 	return all_tests ();
 }

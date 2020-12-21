@@ -190,3 +190,9 @@ void sprint_mem(char *out, const ut8 *buf, size_t len) {
 int tests_run = 0;
 int tests_passed = 0;
 int mu_test_status = MU_TEST_UNBROKEN;
+
+#define mu_main(fcn) int main(int argc, char **argv) { \
+	rz_cons_new (); /* useful to initialize windows terminal */ \
+	rz_cons_free (); \
+	fcn (); \
+}

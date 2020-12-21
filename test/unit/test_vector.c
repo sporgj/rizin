@@ -1119,6 +1119,4 @@ static int all_tests(void) {
 	return tests_passed != tests_run;
 }
 
-int main(int argc, char **argv) {
-	return all_tests();
-}
+mu_main (all_tests)
