@@ -15,7 +15,7 @@ typedef enum rz_process_pipe_t {
 	RZ_PROCESS_PIPE_CREATE,
 	///< Re-use the same pipe as stdout. It can be used for stderr only.
 	RZ_PROCESS_PIPE_STDOUT,
-} RzProcessPipe;
+} RzSubprocessPipe;
 
 typedef struct rz_process_output_t {
 	char *out; // stdout
@@ -24,16 +24,29 @@ typedef struct rz_process_output_t {
 	bool timeout;
 } RzSubprocessOutput;
 
+
+/**
+ * Specify how the new subprocess should be created.
+ */
 typedef struct rz_subprocess_opt_t {
+	///< Name of the executable to run. It is searched also in PATH
 	const char *file;
+	///< Arguments to pass to the subprocess. These are just the arguments and do not include the program name (aka argv[0])
 	const char **args;
+	///< Number of arguments in \p args array
 	size_t args_size;
+	///< Names of environment variables that subprocess should have differently from parent
 	const char **envvars;
+	///< Values of environment variables that subprocess should have differently from parent
 	const char **envvals;
+	///< Number of elements contained in both \p envvars and \p envvals
 	size_t env_size;
-	RzProcessPipe stdin_pipe;
-	RzProcessPipe stdout_pipe;
-	RzProcessPipe stderr_pipe;
+	///< Specify how to deal with subprocess stdin
+	RzSubprocessPipe stdin_pipe;
+	///< Specify how to deal with subprocess stdout
+	RzSubprocessPipe stdout_pipe;
+	///< Specify how to deal with subprocess stderr
+	RzSubprocessPipe stderr_pipe;
 } RzSubprocessOpt;
 
 typedef struct rz_subprocess_t RzSubprocess;
