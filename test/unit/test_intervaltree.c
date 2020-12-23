@@ -338,7 +338,5 @@ int main(int argc, char **argv) {
 	unsigned int seed = argc > 1 ? strtoul (argv[1], NULL, 0) : tv.tv_sec + tv.tv_usec;
 	printf("seed for test_intervaltree: %u\n", seed);
 	srand (seed);
-	rz_cons_new ();
-	rz_cons_free ();
 	return all_tests ();
 }
