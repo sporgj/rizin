@@ -12,6 +12,7 @@ static bool test_rzpipe(void) {
 	rzpipe_close (r);
 #else
 	mu_test_status = MU_TEST_BROKEN;
+
 #endif
 	mu_end;
 }
