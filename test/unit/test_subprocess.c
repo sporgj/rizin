@@ -205,6 +205,7 @@ bool test_interactive(void) {
 	rz_subprocess_stdin_write (sp, (const ut8 *)"3\n", strlen ("3\n"));
 	rz_subprocess_stdin_write (sp, (const ut8 *)"5\n", strlen ("5\n"));
 	RzStrBuf *sb = rz_subprocess_stdout_readline (sp, UT_TIMEOUT);
+	mu_assert_notnull (sb, "stdout strbuf is returned");
 	int c = atoi (rz_strbuf_get (sb));
 	char buf[100];
 	snprintf (buf, sizeof (buf), "%d\n", 3 + 5 + c);
@@ -219,7 +220,7 @@ bool test_interactive(void) {
 	mu_end;
 }
 
-bool all_tests () {
+bool all_tests (void) {
 	mu_run_test (test_noargs_noinput_outerr);
 	mu_run_test (test_args);
 	mu_run_test (test_env);

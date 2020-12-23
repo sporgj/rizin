@@ -1,4 +1,5 @@
 #include <rz_util.h>
+#include <rz_util/rz_subprocess.h>
 
 #if __WINDOWS__
 struct rz_subprocess_t {
@@ -36,7 +37,7 @@ RZ_API bool rz_subprocess_init(void) { return true; }
 RZ_API void rz_subprocess_fini(void) {}
 
 // Create an env block that inherits the current vars but overrides the given ones
-static LPWCH override_env(const char *envvars[], const char *envvals[], size_t env_size) {
+static LPWCH override_env(const char **envvars, const char **envvals, size_t env_size) {
 	LPWCH ret = NULL;
 	LPWCH parent_env = NULL;
 	size_t i;
@@ -226,7 +227,7 @@ error:
 	goto beach;
 }
 
-RZ_API bool rz_subprocess_wait(RzSubprocess *proc, ut64 timeout_ms) {
+RZ_API RzSubprocessWaitReason rz_subprocess_wait(RzSubprocess *proc, ut64 timeout_ms) {
 	OVERLAPPED stdout_overlapped = { 0 };
 	stdout_overlapped.hEvent = CreateEvent (NULL, TRUE, FALSE, NULL);
 	if (!stdout_overlapped.hEvent) {
@@ -338,11 +339,20 @@ RZ_API void rz_subprocess_kill(RzSubprocess *proc) {
 	TerminateProcess (proc->proc, 255);
 }
 
-RZ_API void rz_subprocess_stdin_write(RzSubprocess *proc, const ut8 *buf, size_t buf_size) {
+RZ_API ssize_t rz_subprocess_stdin_write(RzSubprocess *proc, const ut8 *buf, size_t buf_size) {
 	DWORD read;
 	WriteFile (proc->stdin_write, buf, buf_size, &read, NULL);
+	// TODO: fixme
+	return 0;
 }
 
+RZ_API RzStrBuf *rz_subprocess_stdout_read(RzSubprocess *proc, size_t n, ut64 timeout_ms) {
+	return NULL;
+}
+
+RZ_API RzStrBuf *rz_subprocess_stdout_readline(RzSubprocess *proc, ut64 timeout_ms) {
+	return NULL;
+}
 
 RZ_API RzSubprocessOutput *rz_subprocess_drain(RzSubprocess *proc) {
 	RzSubprocessOutput *out = RZ_NEW (RzSubprocessOutput);

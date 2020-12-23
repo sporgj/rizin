@@ -3,6 +3,8 @@
 #ifndef RZ_UTIL_SUBPROCESS_H
 #define RZ_UTIL_SUBPROCESS_H
 
+#include <rz_types_base.h>
+
 
 /**
  * Enum used to determine how pipes should be created, if at all, in the
