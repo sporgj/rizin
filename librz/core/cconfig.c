@@ -2988,7 +2988,6 @@ RZ_API int rz_core_config_init(RzCore *core) {
 	SETI ("dbg.glibc.fc_offset", 0x148, "First chunk offset from brk_start");
 #endif
 	SETBPREF ("dbg.glibc.demangle", "false", "Demangle linked-lists pointers introduced in glibc 2.32");
-	SETPREF ("dbg.libc.dbglib", "", "Set libc debug library file");
 
 	SETBPREF ("esil.prestep", "true", "Step before esil evaluation in `de` commands");
 	SETPREF ("esil.fillstack", "", "Initialize ESIL stack with (random, debrujn, sequence, zeros, ...)");
@@ -3380,7 +3379,6 @@ RZ_API int rz_core_config_init(RzCore *core) {
 
 
 	/* cmd */
-	SETPREF ("cmd.xterm", "xterm -bg black -fg gray -e", "xterm command to spawn with V@");
 	SETCB ("cmd.demangle", "false", &cb_bdc, "run xcrun swift-demangle and similar if available (SLOW)");
 	SETICB ("cmd.depth", 10, &cb_cmddepth, "Maximum command depth");
 	SETPREF ("cmd.bp", "", "Run when a breakpoint is hit");
@@ -3541,7 +3539,6 @@ RZ_API int rz_core_config_init(RzCore *core) {
 	SETDESC (n, "Encode numbers from json outputs using the specified option");
 	SETOPTIONS (n, "none", "string", "hex", NULL);
 
-
 	/* scr */
 #if __EMSCRIPTEN__
 	rz_config_set_cb (cfg, "scr.fgets", "true", cb_scrfgets);
@@ -3680,7 +3677,6 @@ RZ_API int rz_core_config_init(RzCore *core) {
 	SETPREF ("file.type", "", "Type of current file");
 	SETI ("file.loadalign", 1024, "Alignment of load addresses");
 	SETI ("file.openmany", 1, "Maximum number of files opened at once");
-	SETPREF ("file.location", "", "Is the file 'local', 'remote', or 'memory'");
 	/* magic */
 	SETI ("magic.depth", 100, "Recursivity depth in magic description strings");
 
