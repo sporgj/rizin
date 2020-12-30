@@ -21,7 +21,7 @@ void io_map_calculate_skyline(RzIO *io) {
 }
 
 RzIOMap* io_map_new(RzIO* io, int fd, int perm, ut64 delta, ut64 addr, ut64 size) {
-	if (!size || !io || !io->map_ids) {
+	if (!io || !io->map_ids) {
 		return NULL;
 	}
 	RzIOMap* map = RZ_NEW0 (RzIOMap);
@@ -31,7 +31,7 @@ RzIOMap* io_map_new(RzIO* io, int fd, int perm, ut64 delta, ut64 addr, ut64 size
 	}
 	map->fd = fd;
 	map->delta = delta;
-	if ((UT64_MAX - size + 1) < addr) {
+	if (size && (UT64_MAX - size + 1) < addr) {
 		/// XXX: this is leaking a map!!!
 		io_map_new (io, fd, perm, delta - addr, 0LL, size + addr);
 		size = -(st64)addr;
@@ -55,7 +55,7 @@ RZ_API bool rz_io_map_remap(RzIO *io, ut32 id, ut64 addr) {
 	if (map) {
 		ut64 size = map->itv.size;
 		map->itv.addr = addr;
-		if (UT64_MAX - size + 1 < addr) {
+		if (size && UT64_MAX - size + 1 < addr) {
 			map->itv.size = -addr;
 			rz_io_map_new (io, map->fd, map->perm, map->delta - addr, 0, size + addr);
 		}
@@ -393,7 +393,7 @@ RZ_API bool rz_io_map_resize(RzIO *io, ut32 id, ut64 newsize) {
 		return false;
 	}
 	ut64 addr = map->itv.addr;
-	if (UT64_MAX - newsize + 1 < addr) {
+	if (newsize && UT64_MAX - newsize + 1 < addr) {
 		map->itv.size = -addr;
 		rz_io_map_new (io, map->fd, map->perm, map->delta - addr, 0, newsize + addr);
 		return true;
