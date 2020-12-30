@@ -17,8 +17,12 @@ static bool test_rzpipe(void) {
 }
 
 static bool test_rzpipe_404(void) {
+#ifndef __WINDOWS__
 	RzPipe *r = rzpipe_open ("ricin -q0 -");
 	mu_assert ("rzpipe can spawn", !r);
+#else
+	mu_test_status = MU_TEST_BROKEN;
+#endif
 	mu_end;
 }
 
