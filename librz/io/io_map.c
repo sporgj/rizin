@@ -154,7 +154,7 @@ RZ_API RzIOMap* rz_io_map_get_paddr(RzIO* io, ut64 paddr) {
 	void **it;
 	rz_pvector_foreach_prev (&io->maps, it) {
 		RzIOMap *map = *it;
-		if (map->delta <= paddr && paddr <= map->delta + map->itv.size - 1) {
+		if (map->delta <= paddr && paddr <= map->delta + (map->itv.size? map->itv.size - 1: 0)) {
 			return map;
 		}
 	}
@@ -389,7 +389,7 @@ RZ_API RzList* rz_io_map_get_for_fd(RzIO* io, int fd) {
 
 RZ_API bool rz_io_map_resize(RzIO *io, ut32 id, ut64 newsize) {
 	RzIOMap *map;
-	if (!newsize || !(map = rz_io_map_resolve (io, id))) {
+	if (!(map = rz_io_map_resolve (io, id))) {
 		return false;
 	}
 	ut64 addr = map->itv.addr;

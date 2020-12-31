@@ -30,7 +30,11 @@ static int iowhence2buf(int whence) {
 
 static ut64 rz_io_def_mmap_seek(RzIO *io, RzIOMMapFileObj *mmo, ut64 offset, int whence) {
 	rz_return_val_if_fail (io && mmo, UT64_MAX);
-	return rz_buf_seek (mmo->buf, offset, iowhence2buf (whence));
+	// NOTE: io->off should not be set here and code outside RzIO should not
+	// rely on it to get the current seek. They should use `rz_io_seek` instead.
+	// Keep it here until all use cases of io->off are converted.
+	io->off = rz_buf_seek (mmo->buf, offset, iowhence2buf (whence));
+	return io->off;
 }
 
 static void rz_io_def_mmap_free(RzIOMMapFileObj *mmo) {
